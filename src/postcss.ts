@@ -4,7 +4,7 @@ import path from "node:path";
 import os from "node:os";
 import fs from "node:fs/promises";
 import autoprefixer from "autoprefixer";
-import { fileURLToPath } from "node:url";
+import { srcDir } from "./utils.js";
 
 export async function generateCss(tailwindContentDir: string): Promise<string> {
   let globalCss = `
@@ -13,8 +13,7 @@ export async function generateCss(tailwindContentDir: string): Promise<string> {
     @tailwind utilities;
   `;
 
-  const dirname = path.dirname(fileURLToPath(import.meta.url));
-  globalCss += await fs.readFile(path.join(dirname, "default.css"), "utf-8");
+  globalCss += await fs.readFile(path.join(srcDir(), "../defaults/default.css"), "utf-8");
 
   const starryNightUrl =
     "https://raw.githubusercontent.com/wooorm/starry-night/f0b488090d0a57ef67650237e96a5c87dbce6370/style/both.css";

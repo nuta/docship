@@ -4,6 +4,10 @@
 	"bin": {
 		"docship": "dist/index.js"
 	},
+  "files": [
+    "dist",
+    "defaults"
+  ],
 	"type": "module",
 	"scripts": {
 		"dev": "DEBUG=1 tsx watch --ignore /private src/index.ts --watch --indir example",

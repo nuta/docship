@@ -51,7 +51,7 @@ export async function build(options: BuildOptions) {
 
   // Load the default layout.
   const defaultLayout = await loadLayoutFile(
-    path.join(srcDir(), "default_layout.jsx"),
+    path.join(srcDir(), "../defaults/default.jsx"),
   );
 
   await fs.rm(options.outDir, { recursive: true, force: true });
