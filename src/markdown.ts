@@ -7,7 +7,6 @@ import { unified } from "unified";
 import fs from "node:fs/promises";
 import { matter } from "vfile-matter";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeCodeTitles from "rehype-code-titles";
 import rehypeStarryNight from "rehype-starry-night";
 import rehypeSlug from "rehype-slug";
 
@@ -31,7 +30,6 @@ export async function markdown2html(mdPath: string): Promise<Generated> {
     })
     .use(remarkGfm)
     .use(remarkRehype)
-    .use(rehypeCodeTitles)
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, {
       behavior: "wrap",
