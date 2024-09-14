@@ -131,7 +131,7 @@ export function Blog({ meta, children }) {
 | `children`| `Element` | The content of the markdown file. |
 | `pages` | `Page[]` | An array of all pages. Useful for generating an index page. |
 
-> ![NOTE]
+> [!NOTE]
 >
 > **Limitations:**
 >
