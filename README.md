@@ -33,16 +33,24 @@ docship --watch
 
 ## Deploy to Vercel
 
-1. Create a GitHub repository and add it to Vercel.
-2. Create a project with framework **"Other"**.
-3. Open **Project Settings > General**, and fill **Build & Development Settings** as follows:
+1. Create `vercel.json` in your project root:
 
-| Field | Value |
-|-------|-------|
-| Framework Preset | Other |
-| Build Command | `docship` |
-| Output Directory | `output` |
-| Install Command | `npm install -g docship` |
+```json
+{
+  "framework": null,
+  "buildCommand": "docship",
+  "installCommand": "npm i -g docship",
+  "outputDirectory": "output",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "github": {
+    "silent": true
+  }
+}
+```
+
+2. Connect your GitHub repository to Vercel.
+4. Done! Your website will be deployed automatically on every push.
 
 ## Directory structure
 
