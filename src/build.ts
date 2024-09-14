@@ -86,6 +86,15 @@ export async function build(options: BuildOptions) {
     throw new Error("No pages (**/*.md) found");
   }
 
+  let headTagEpilogue = "";
+  headTagEpilogue += `<link rel="stylesheet" href="/styles.css">`;
+  headTagEpilogue += `<meta name="generator" content="Docship (https://github.com/nuta/docship)">`;
+
+  const generateFeed = options.config?.feedOptions;
+  if (generateFeed) {
+    headTagEpilogue += `<link rel="alternate" type="application/atom+xml" href="/atom.xml">`;
+  }
+
   for (const { href, meta, sourcePath, html } of pages) {
     let layout: Layout;
     if (typeof meta.layout === "string") {
@@ -105,12 +114,13 @@ export async function build(options: BuildOptions) {
       );
     }
 
-    const renderedHtml = await layout.render(
+    let renderedHtml = await layout.render(
       { type: "html", html },
       meta,
       pages,
     );
 
+    renderedHtml = renderedHtml.replace("</head>", `${headTagEpilogue}</head>`);
     await builder.writeStaticFile(`${href}.html`, renderedHtml);
   }
 
@@ -132,7 +142,7 @@ export async function build(options: BuildOptions) {
   const css = await generateCss(builder.tailwindContentDir());
   await builder.writeStaticFile("styles.css", css);
 
-  if (options.config?.feedOptions) {
+  if (generateFeed) {
     progress("Generating atom.xml");
     const atom = generateFeed(options.config, pages);
     await builder.writeStaticFile("atom.xml", atom);

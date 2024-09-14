@@ -32,7 +32,6 @@ export async function watch(options: WatchOptions) {
       outDir: options.outDir,
       builderName: options.builderName,
       config: options.config,
-      tmpDir: new TempDir(),
     });
 
     for (const resolve of reloadResolvers) {

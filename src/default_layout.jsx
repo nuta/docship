@@ -5,7 +5,6 @@ export default async function DefaultLayout({ children, meta, pages }) {
         <title>{meta.title}</title>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
-        <link rel="stylesheet" type="text/css" href="/styles.css" />
       </head>
       <body className="mx-auto max-w-2xl w-full py-8 px-4">
         <header className="mb-8 pb-1 border-b border-gray-200">
