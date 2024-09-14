@@ -9,7 +9,7 @@ A simple static website generator built for your `docs` directory.
 - **Zero client-side JavaScript:** No bloated JavaScript code in your website by default.
 - **JSX-based layouts with Tailwind:** Use [JSX](https://react.dev/learn/writing-markup-with-jsx) to define your page layouts, with built-in [Tailwind](https://tailwindcss.com/docs/utility-first) support.
 - **Watch mode:** Try `docship --watch`.
-- **Publish quickly:** Just run `docship && vercel deploy --prebuilt output` to deploy your website to [Vercel](https://vercel.com/products/previews).
+- **Publish quickly:** Deploy to [Vercel](https://vercel.com/products/previews) automatically with a Git push (see below).
 
 ## Why yet another static site generator?
 
@@ -30,6 +30,19 @@ If you want to preview your website with a local server:
 ```
 docship --watch
 ```
+
+## Deploy to Vercel
+
+1. Create a GitHub repository and add it to Vercel.
+2. Create a project with framework **"Other"**.
+3. Open **Project Settings > General**, and fill **Build & Development Settings** as follows:
+
+| Field | Value |
+|-------|-------|
+| Framework Preset | Other |
+| Build Command | `docship` |
+| Output Directory | `output` |
+| Install Command | `npm install -g docship` |
 
 ## Directory structure
 
