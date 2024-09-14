@@ -1,0 +1,154 @@
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/lato/v24/S6uyw4BMUTPHjx4wXiWtFCc.woff2) format('woff2');
+  unicode-range: U+0000-00FF;
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  src: url(https://fonts.gstatic.com/s/lato/v24/S6u9w4BMUTPHh6UVSwiPGQ3q5d0.woff2) format('woff2');
+  unicode-range: U+0000-00FF;
+}
+
+:root {
+  --font-sans: "Lato", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "ヒラギノ角ゴ ProN W3", "Meiryo", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply text-gray-700 dark:bg-slate-950 dark:text-gray-300 leading-7;
+
+    font-family: var(--font-sans);
+    font-optical-sizing: auto;
+    hyphens: auto;
+    line-break: strict;
+    overflow-wrap: break-word;
+    word-break: auto-phrase;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+    font-feature-settings: "palt";
+  }
+
+  h2 {
+    @apply text-lg sm:text-2xl mt-12;
+  }
+
+  h3 {
+    @apply text-base mt-8;
+  }
+
+  .rehype-code-title {
+    font-family: monospace;
+    @apply -mb-2 mt-2 text-gray-700 bg-gray-200 py-2 font-bold text-sm select-all;
+  }
+
+  .rehype-code-title::before {
+    content: "📝 ";
+  }
+
+  pre {
+    @apply overflow-x-scroll text-sm text-gray-700 bg-gray-100 dark:text-gray-100 dark:bg-gray-700 py-4 px-4 my-3;
+  }
+
+  .callout > pre {
+    @apply w-[97%];
+  }
+
+  a:not(h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a) {
+    @apply text-sky-600 dark:text-sky-400 underline;
+  }
+
+  a:not(h1 > a, h2 > a, h3 > a, h4 > a, h5 > a, h6 > a):hover {
+    @apply text-sky-700 dark:text-sky-500 underline;
+  }
+
+  h1 > a:hover::after,
+  h2 > a:hover::after,
+  h3 > a:hover::after,
+  h4 > a:hover::after,
+  h5 > a:hover::after,
+  h6 > a:hover::after {
+    content: " #";
+  }
+
+  code:not(pre > code) {
+    @apply text-sm bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 mx-1 rounded-lg select-all;
+  }
+
+  ul, ol {
+    @apply my-4;
+  }
+
+  ul ul {
+    @apply ml-8 my-2;
+    list-style-type: revert;
+  }
+
+  li {
+    @apply mt-[1rem] ml-4;
+  }
+
+  ul li::before {
+    content: "";
+    margin-right: -0.4rem;
+  }
+
+  ul {
+    @apply list-inside list-disc;
+  }
+
+  ol {
+    @apply list-inside list-decimal;
+  }
+
+
+  blockquote {
+    @apply border-l-4 border-gray-300 dark:border-gray-600 pl-4 my-6;
+  }
+
+  .callout {
+    @apply py-4 px-8 border-l-4;
+  }
+
+  .callout-tip {
+    @apply bg-blue-100 border-blue-500;
+  }
+
+  .callout-warning {
+    @apply bg-yellow-100 border-yellow-500;
+  }
+
+  p:not(:first-child) {
+    @apply mt-5;
+  }
+
+  table {
+    @apply w-full border-collapse my-6 text-sm;
+  }
+
+  thead {
+    @apply bg-gray-100 dark:bg-gray-600;
+  }
+
+  th {
+    @apply text-left font-bold text-gray-700 dark:text-gray-200 p-2 border border-gray-300 dark:border-gray-600;
+  }
+
+  td {
+    @apply p-2 border border-gray-300 dark:border-gray-600;
+  }
+
+  tr:nth-child(even) {
+    @apply bg-gray-50 dark:bg-gray-800;
+  }
+
+  img {
+    @apply max-h-[500px];
+  }
+}
