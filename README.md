@@ -8,7 +8,7 @@ A simple static website generator built for your `docs` directory.
 - **No intrusive conventions:** No `src/pages` or `_posts` directories.  Put your markdown files as you like.
 - **Zero client-side JavaScript:** No bloated JavaScript code in your website by default.
 - **JSX-based layouts with Tailwind:** Use [JSX](https://react.dev/learn/writing-markup-with-jsx) to define your page layouts, and [Tailwind](https://tailwindcss.com/docs/utility-first) is also built-in.
-- **Watch mode:** Try `docship --watch` and click the shown URL.
+- **Watch mode:** Try `docship --watch`.
 - **Publish quickly:** Just run `docship && vercel deploy --prebuilt output` to deploy your website to [Vercel](https://vercel.com/products/previews).
 
 ## Why yet another static site generator?
@@ -21,6 +21,8 @@ A simple static website generator built for your `docs` directory.
 
 ```
 npm install -g docship
+cd path/to/docs
+docship
 ```
 
 ## Directory structure
@@ -31,16 +33,16 @@ npm install -g docship
 - Layouts are defined in the `_layouts` directory. The layout for a page is determined by the `layout` field in the markdown front-matter.
 
 ```
-├── _layouts/           -- Layouts directory
-│   ├── blog.jsx        -- Layout for "blog" pages
-│   └── index.jsx       -- Layout for "index" page
-├── blog/               -- "blog" directory
-│   ├── why-you-should-visit-kumamoto.md    -- A public blog post
-│   ├── best-cappucino-in-rome.md           -- Another post
-│   └── _lessons-learned-from-my-life.md    -- A draft (ignored) post
-├── favicon.ico         -- /favicon.ico
-├── index.md            -- /index.html
-└── docship..mjs    -- Configuration file (optional)
+├── favicon.ico    -- Static files are copied as-is
+├── index.md       -- /index.html
+├── docship.mjs    -- Configuration file (optional)
+├── _layouts/      -- Layouts directory
+│   ├── blog.jsx     -- Layout for "blog" pages
+│   └── index.jsx    -- Layout for "index" page
+└── blog/                                 -- "blog" directory
+   ├── why-you-should-visit-kumamoto.md     -- A public blog post
+   ├── best-cappucino-in-rome.md            -- Another post
+   └── _lessons-learned-from-my-life.md     -- A draft (ignored) post
 ```
 
 ## Markdown front-matter
@@ -109,7 +111,7 @@ export function Blog({ meta, children }) {
 
 ## Atom feed
 
-`docship` can generate an Atom feed for your website. To enable the feed, add the following to your `docship..mjs`:
+`docship` can generate an Atom feed for your website. To enable the feed, add the following to your `docship.mjs`:
 
 ```js
 export default {
