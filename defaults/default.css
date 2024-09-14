@@ -51,13 +51,9 @@
     @apply text-base mt-8;
   }
 
-  .rehype-code-title {
+  .code-block-title {
     font-family: monospace;
-    @apply -mb-2 mt-2 text-gray-700 bg-gray-200 py-2 font-bold text-sm select-all;
-  }
-
-  .rehype-code-title::before {
-    content: "📝 ";
+    @apply w-fit -mt-2 mb-4 text-gray-700 bg-gray-200 px-2 rounded font-bold text-sm select-all;
   }
 
   pre {

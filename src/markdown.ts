@@ -9,6 +9,7 @@ import { matter } from "vfile-matter";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeStarryNight from "rehype-starry-night";
 import rehypeSlug from "rehype-slug";
+import { rehypeCodeTitles } from "./rehype-plugins/code-titles.js";
 
 export type FrontMatter = Record<string, string | boolean | number>;
 
@@ -30,6 +31,7 @@ export async function markdown2html(mdPath: string): Promise<Generated> {
     })
     .use(remarkGfm)
     .use(remarkRehype)
+    .use(rehypeCodeTitles)
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, {
       behavior: "wrap",

@@ -1,7 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { Layout, loadLayoutFile } from "../src/layout";
 import { TempDir } from "../src/tmpdir";
-import fs from 'node:fs/promises';
 import { onTestFinished } from "vitest";
 
 async function buildLayout(layout: string): Promise<Layout> {
