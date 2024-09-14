@@ -1,5 +1,5 @@
 import * as swc from "@swc/core";
-import type { TempDir } from "./tmpdir.js";
+import { prepareTempDir } from "./tmpdir.js";
 import type { FrontMatter } from "./markdown.js";
 
 export type Element =
@@ -7,7 +7,7 @@ export type Element =
   | { type: "html"; html: string }
   | {
       type: "jsx";
-      tagName: string;
+      tagName: string | LayoutFn;
       props: Record<string, unknown> | null;
       children: (Element | Element[])[];
     };
@@ -35,6 +35,27 @@ function elem2html(elem: Element | undefined): string {
     return elem.html;
   }
 
+  let childrenHtml = '';
+  if (Array.isArray(elem.children)) {
+    for (const child of elem.children) {
+      if (Array.isArray(child)) {
+        for (const innerChild of child) {
+          childrenHtml += elem2html(innerChild);
+        }
+      } else if (typeof child != null) {
+        childrenHtml += elem2html(child);
+      }
+    }
+  } else if (typeof elem.children != null) {
+    childrenHtml += elem2html(elem.children);
+  }
+
+  if (elem.tagName instanceof Function) {
+    const fn = elem.tagName as LayoutFn;
+    const result = fn({ ...elem.props, children: childrenHtml });
+    return elem2html(result as Element);
+  }
+
   let html = `<${elem.tagName}`;
   if (elem.props) {
     for (let [key, value] of Object.entries(elem.props)) {
@@ -52,22 +73,9 @@ function elem2html(elem: Element | undefined): string {
       html += ` ${key}="${valueStr}"`;
     }
   }
-  html += ">";
 
-  if (Array.isArray(elem.children)) {
-    for (const child of elem.children) {
-      if (Array.isArray(child)) {
-        for (const innerChild of child) {
-          html += elem2html(innerChild);
-        }
-      } else if (typeof child != null) {
-        // console.log(child)
-        html += elem2html(child);
-      }
-    }
-  } else if (typeof elem.children != null) {
-    html += elem2html(elem.children);
-  }
+  html += ">";
+  html += childrenHtml;
 
   if (!["br", "meta"].includes(elem.tagName)) {
     html += `</${elem.tagName}>`;
@@ -84,11 +92,11 @@ export interface Page {
 }
 
 export class Layout {
-  #layoutPath: string;
+  #name: string;
   #layoutFn: LayoutFn;
 
-  constructor(layoutPath: string, layoutFn: LayoutFn) {
-    this.#layoutPath = layoutPath;
+  constructor(name: string, layoutFn: LayoutFn) {
+    this.#name = name;
     this.#layoutFn = layoutFn;
   }
 
@@ -100,13 +108,13 @@ export class Layout {
     const rootElem = await this.#layoutFn({ children, meta, pages });
     if (typeof rootElem !== "object" || rootElem === null) {
       throw new Error(
-        `${this.#layoutPath} returned invalid JSX element: ${rootElem}`,
+        `${this.#name} returned invalid JSX element: ${rootElem}`,
       );
     }
 
     if (!("type" in rootElem) || rootElem.type !== "jsx") {
       throw new Error(
-        `${this.#layoutPath} returned invalid JSX element: ${rootElem}`,
+        `${this.#name} returned invalid JSX element: ${rootElem}`,
       );
     }
 
@@ -117,15 +125,13 @@ export class Layout {
 
 export async function loadLayoutFile(
   layoutPath: string,
-  tmpDir: TempDir,
 ): Promise<Layout> {
-  const layoutFn = await importLayoutFile(layoutPath, tmpDir);
+  const layoutFn = await importLayoutFile(layoutPath);
   return new Layout(layoutPath, layoutFn);
 }
 
 async function importLayoutFile(
   layoutPath: string,
-  tmpDir: TempDir,
 ): Promise<LayoutFn> {
   let source: any;
   try {
@@ -150,8 +156,9 @@ async function importLayoutFile(
     throw new Error(`failed to transpile ${layoutPath}: ${e}`);
   }
 
+  const tmpDir = prepareTempDir();
   const transpiledPath = tmpDir.writeFileSync(
-    layoutPath.replaceAll("/", ".").replace(/\.jsx$/, ".mjs"),
+    'layouts/' + layoutPath.replaceAll("/", ".").replace(/\.jsx$/, ".mjs"),
     source.code,
   );
 

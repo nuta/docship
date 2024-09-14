@@ -2,7 +2,6 @@ import path from "node:path";
 import fs from "node:fs/promises";
 import { type Layout, loadLayoutFile, type Page } from "./layout.js";
 import { markdown2html } from "./markdown.js";
-import type { TempDir } from "./tmpdir.js";
 import { progress, srcDir } from "./utils.js";
 import type { Builder } from "./builders/builder.js";
 import { StaticBuilder } from "./builders/static.js";
@@ -17,7 +16,6 @@ interface BuildOptions {
   builderName: string;
   inDir: string;
   outDir: string;
-  tmpDir: TempDir;
   config?: Config;
 }
 
@@ -45,7 +43,7 @@ export async function build(options: BuildOptions) {
 
     const layoutRelPath = path.join(layoutsDir, basename);
     progress(`Loading ${layoutRelPath}`);
-    const layout = await loadLayoutFile(layoutRelPath, options.tmpDir);
+    const layout = await loadLayoutFile(layoutRelPath);
 
     const lauoutName = path.basename(layoutRelPath, ".jsx");
     layouts[lauoutName] = layout;
@@ -54,7 +52,6 @@ export async function build(options: BuildOptions) {
   // Load the default layout.
   const defaultLayout = await loadLayoutFile(
     path.join(srcDir(), "default_layout.jsx"),
-    options.tmpDir,
   );
 
   await fs.rm(options.outDir, { recursive: true, force: true });

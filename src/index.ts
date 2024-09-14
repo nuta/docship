@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 import path from "node:path";
 import { build } from "./build.js";
-import { TempDir } from "./tmpdir.js";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 import type { Config } from "./config.js";
@@ -58,7 +57,6 @@ async function main() {
     await watch(buildOptions);
   } else {
     await build({
-      tmpDir: new TempDir(),
       ...buildOptions,
     });
   }

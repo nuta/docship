@@ -33,6 +33,10 @@ export class TempDir {
   }
 
   cleanup() {
-    fs.rmdirSync(this.path, { recursive: true });
+    fs.rmSync(this.path, { recursive: true });
   }
+}
+
+export function prepareTempDir(): TempDir {
+  return new TempDir();
 }
