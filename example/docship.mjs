@@ -1,16 +1,17 @@
 export default {
-  baseUrl: "https://seiya.me",
+  baseUrl: "https://github.com/nuta/docship",
   feedOptions: {
-    title: "seiya.me",
-    id: "https://seiya.me",
-    link: "https://seiya.me",
+    title: "Docship Example",
+    id: "https://github.com/nuta/docship",
+    link: "https://github.com/nuta/docship",
     author: {
-      name: "Seiya Nuta",
+      name: "Docship Authors",
     }
   },
   callbacks: {
     filterFeed(page) {
-      return page.href != "/blog/index" && page.meta.layout === 'blog';
+      // Exclude the index page from the feed.
+      return page.meta.layout === 'blog';
     },
   }
 }
