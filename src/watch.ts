@@ -1,7 +1,7 @@
 import type { Config } from "./config.js";
 import { progress } from "./utils.js";
 import { build } from "./build.js";
-import { createServer } from 'vite'
+import { createServer } from "vite";
 import fs from "fs/promises";
 
 export interface WatchOptions {
@@ -15,7 +15,6 @@ export async function watch(options: WatchOptions) {
   let reloadResolvers: any[] = [];
   const triggerBuild = async () => {
     try {
-
       await build({
         inDir: options.inDir,
         outDir: options.outDir,
@@ -41,12 +40,12 @@ export async function watch(options: WatchOptions) {
     server: {
       port: 1337,
     },
-  })
-  await previewServer.listen()
+  });
+  await previewServer.listen();
 
   progress("started preview server");
-  previewServer.printUrls()
-  previewServer.bindCLIShortcuts({ print: true })
+  previewServer.printUrls();
+  previewServer.bindCLIShortcuts({ print: true });
 }
 
 function shouldReload(filePath: string) {
@@ -58,9 +57,17 @@ function shouldReload(filePath: string) {
   );
 }
 
-async function watchFiles(triggerBuild: () => Promise<void>, inDir: string, outDir: string) {
+async function watchFiles(
+  triggerBuild: () => Promise<void>,
+  inDir: string,
+  outDir: string,
+) {
   for await (const ev of fs.watch(inDir, { recursive: true })) {
-    if (!ev.filename || !shouldReload(ev.filename) || ev.filename.startsWith(outDir)) {
+    if (
+      !ev.filename ||
+      !shouldReload(ev.filename) ||
+      ev.filename.startsWith(outDir)
+    ) {
       continue;
     }
 

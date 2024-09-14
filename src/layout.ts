@@ -35,7 +35,7 @@ function elem2html(elem: Element | undefined): string {
     return elem.html;
   }
 
-  let childrenHtml = '';
+  let childrenHtml = "";
   if (Array.isArray(elem.children)) {
     for (const child of elem.children) {
       if (Array.isArray(child)) {
@@ -123,16 +123,12 @@ export class Layout {
   }
 }
 
-export async function loadLayoutFile(
-  layoutPath: string,
-): Promise<Layout> {
+export async function loadLayoutFile(layoutPath: string): Promise<Layout> {
   const layoutFn = await importLayoutFile(layoutPath);
   return new Layout(layoutPath, layoutFn);
 }
 
-async function importLayoutFile(
-  layoutPath: string,
-): Promise<LayoutFn> {
+async function importLayoutFile(layoutPath: string): Promise<LayoutFn> {
   let source: any;
   try {
     source = await swc.transformFile(layoutPath, {
@@ -158,7 +154,7 @@ async function importLayoutFile(
 
   const tmpDir = prepareTempDir();
   const transpiledPath = tmpDir.writeFileSync(
-    'layouts/' + layoutPath.replaceAll("/", ".").replace(/\.jsx$/, ".mjs"),
+    "layouts/" + layoutPath.replaceAll("/", ".").replace(/\.jsx$/, ".mjs"),
     source.code,
   );
 

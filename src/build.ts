@@ -114,11 +114,7 @@ export async function build(options: BuildOptions) {
       );
     }
 
-    let renderedHtml = await layout.render(
-      { type: "html", html },
-      meta,
-      pages,
-    );
+    let renderedHtml = await layout.render({ type: "html", html }, meta, pages);
 
     renderedHtml = renderedHtml.replace("</head>", `${headTagEpilogue}</head>`);
     await builder.writeStaticFile(`${href}.html`, renderedHtml);
