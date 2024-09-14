@@ -90,8 +90,8 @@ export async function build(options: BuildOptions) {
   headTagEpilogue += `<link rel="stylesheet" href="/styles.css">`;
   headTagEpilogue += `<meta name="generator" content="Docship (https://github.com/nuta/docship)">`;
 
-  const generateFeed = options.config?.feedOptions;
-  if (generateFeed) {
+  const needsFeed = options.config?.feedOptions;
+  if (needsFeed) {
     headTagEpilogue += `<link rel="alternate" type="application/atom+xml" href="/atom.xml">`;
   }
 
@@ -142,7 +142,7 @@ export async function build(options: BuildOptions) {
   const css = await generateCss(builder.tailwindContentDir());
   await builder.writeStaticFile("styles.css", css);
 
-  if (generateFeed) {
+  if (needsFeed) {
     progress("Generating atom.xml");
     const atom = generateFeed(options.config, pages);
     await builder.writeStaticFile("atom.xml", atom);
