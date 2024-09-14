@@ -5,9 +5,9 @@ A simple static website generator built for your `docs` directory.
 ## Features
 
 - **Zero config:** Just run `docship` in your `docs` directory. That's it.
-- **No intrusive conventions:** No `src/pages` or `_posts` directories.  Put your markdown files as you like.
+- **No intrusive conventions:** No `src/pages` or `_posts` directories.  Place your markdown files as you like.
 - **Zero client-side JavaScript:** No bloated JavaScript code in your website by default.
-- **JSX-based layouts with Tailwind:** Use [JSX](https://react.dev/learn/writing-markup-with-jsx) to define your page layouts, and [Tailwind](https://tailwindcss.com/docs/utility-first) is also built-in.
+- **JSX-based layouts with Tailwind:** Use [JSX](https://react.dev/learn/writing-markup-with-jsx) to define your page layouts, with built-in [Tailwind](https://tailwindcss.com/docs/utility-first) support.
 - **Watch mode:** Try `docship --watch`.
 - **Publish quickly:** Just run `docship && vercel deploy --prebuilt output` to deploy your website to [Vercel](https://vercel.com/products/previews).
 
@@ -20,9 +20,15 @@ A simple static website generator built for your `docs` directory.
 ## Quickstart
 
 ```
-npm install -g docship
-cd path/to/docs
-docship
+npm install -g docship  # Install docship
+cd path/to/docs         # Move to your docs directory
+docship                 # Generate HTML files ("output" directory by default)
+```
+
+If you want to preview your website with a local server:
+
+```
+docship --watch
 ```
 
 ## Directory structure
@@ -104,10 +110,12 @@ export function Blog({ meta, children }) {
 | `children`| `Element` | The content of the markdown file. |
 | `pages` | `Page[]` | An array of all pages. Useful for generating an index page. |
 
-### Limitations
-
-- React is not available. We use JSX as a templating language to generate fully static HTML files.
-- Importing components is not (yet) supported. You can only use Node.js built-in modules.
+> ![NOTE]
+>
+> **Limitations:**
+>
+> - React is not available. We use JSX as a templating language to generate fully static HTML files.
+> - Importing components is not (yet) supported. You can only use Node.js built-in modules.
 
 ## Atom feed
 
