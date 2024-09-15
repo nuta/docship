@@ -50,6 +50,7 @@ docship --watch
 ```
 
 2. Connect your GitHub repository to Vercel.
+3. Change the Node.js version in Vercel Dashboard (**Settings** > **General** > **Node.js Version**). Docship requires `20.x` or higher.
 4. Done! Your website will be deployed automatically on every push.
 
 ## Directory structure
