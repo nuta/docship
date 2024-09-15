@@ -1,17 +1,17 @@
-import { type Root } from 'hast';
-import { visit } from 'unist-util-visit';
+import { type Root } from "hast";
+import { visit } from "unist-util-visit";
 
 const LANG_WITH_TITLE = /^(?<lang>language-[a-z_0-9-]+):(?<title>.+)$/;
 
 export function rehypeCodeTitles(): (tree: Root) => void {
   return (tree) => {
-    visit(tree, 'element', (node, index, parent) => {
-      if (parent?.type !== 'element' || index === undefined) {
+    visit(tree, "element", (node, index, parent) => {
+      if (parent?.type !== "element" || index === undefined) {
         return;
       }
 
       // Is this a code block?
-      if (node.tagName !== 'code' || parent.tagName !== 'pre') {
+      if (node.tagName !== "code" || parent.tagName !== "pre") {
         return;
       }
 
@@ -26,22 +26,24 @@ export function rehypeCodeTitles(): (tree: Root) => void {
         return;
       }
 
-      const otherClassNames = classNames.filter((className) => className != m[0]);
-      node.properties = { className: [...otherClassNames, m.groups?.lang!] }
+      const otherClassNames = classNames.filter(
+        (className) => className != m[0],
+      );
+      node.properties = { className: [...otherClassNames, m.groups?.lang!] };
 
       parent.children.splice(index, 0, {
-        type: 'element',
-        tagName: 'div',
+        type: "element",
+        tagName: "div",
         properties: {
-          className: ['code-block-title'],
+          className: ["code-block-title"],
         },
         children: [
           {
-            type: 'text',
+            type: "text",
             value: m.groups?.title!,
           },
         ],
       });
-    })
-  }
+    });
+  };
 }

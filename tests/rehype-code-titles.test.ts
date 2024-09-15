@@ -8,12 +8,12 @@ import { rehypeCodeTitles } from "../src/rehype-plugins/code-titles.js";
 
 async function md2html(md: string): Promise<string> {
   const processed = await unified()
-  .use(remarkParse)
-  .use(remarkGfm)
-  .use(remarkRehype)
-  .use(rehypeCodeTitles)
-  .use(rehypeStringify)
-  .process(md);
+    .use(remarkParse)
+    .use(remarkGfm)
+    .use(remarkRehype)
+    .use(rehypeCodeTitles)
+    .use(rehypeStringify)
+    .process(md);
 
   return processed.toString();
 }
@@ -25,7 +25,7 @@ describe("rehype-code-titles", () => {
       "",
       "```rust:example.rs",
       "fn main() {",
-      "  println!(\"Hello, world!\");",
+      '  println!("Hello, world!");',
       "}",
       "```",
     ].join("\n");

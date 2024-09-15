@@ -25,7 +25,7 @@ describe("JSX renderer", () => {
         </html>
       )`);
 
-    const html = await layout.render("body text", { title: 'title text' }, []);
+    const html = await layout.render("body text", { title: "title text" }, []);
     expect(html).toMatchInlineSnapshot(`
       "<!DOCTYPE html>
       <html><head><title>title text</title></head><body>body text</body></html>"
@@ -46,7 +46,7 @@ describe("JSX renderer", () => {
         </Template>
       )`);
 
-    const html = await layout.render("body text", { title: 'title text' }, []);
+    const html = await layout.render("body text", { title: "title text" }, []);
     expect(html).toMatchInlineSnapshot(`
       "<!DOCTYPE html>
       <b>body text</b>"
