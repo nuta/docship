@@ -77,7 +77,7 @@ function elem2html(elem: Element | undefined): string {
   html += ">";
   html += childrenHtml;
 
-  if (!["br", "meta"].includes(elem.tagName)) {
+  if (!["br", "meta", "link"].includes(elem.tagName)) {
     html += `</${elem.tagName}>`;
   }
 
