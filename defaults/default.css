@@ -96,7 +96,7 @@
   }
 
   li {
-    @apply mt-[1rem] ml-4;
+    @apply mt-[0.5rem] ml-4;
   }
 
   ul li::before {
@@ -121,11 +121,23 @@
   }
 
   .callout-tip {
-    @apply bg-blue-100 border-blue-500;
+    @apply bg-green-100 border-green-500 dark:bg-green-900 dark:border-green-700;
   }
 
   .callout-warning {
-    @apply bg-yellow-100 border-yellow-500;
+    @apply bg-yellow-100 border-yellow-500 dark:bg-yellow-900 dark:border-yellow-700;
+  }
+
+  .callout-note {
+    @apply bg-blue-100 border-blue-500 dark:bg-blue-900 dark:border-blue-700;
+  }
+
+  .callout-danger {
+    @apply bg-red-100 border-red-500 dark:bg-red-900 dark:border-red-700;
+  }
+
+  .callout-important {
+    @apply bg-red-100 border-red-500 dark:bg-red-900 dark:border-red-700;
   }
 
   p:not(:first-child) {

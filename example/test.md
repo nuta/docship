@@ -19,3 +19,29 @@ int main(void) {
   puts("Hello!");
 }
 ```
+
+## Lists
+
+- Item 1
+- Item 2
+  - Item 2.1
+  - Item 2.2
+- Item 3
+
+## Callouts
+
+> [!NOTE]
+>
+> This is a note.
+
+> [!TIP]
+>
+> This is a tip.
+
+> [!WARNING]
+>
+> This is a warning.
+
+> [!IMPORTANT]
+>
+> This is important.
