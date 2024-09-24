@@ -12,6 +12,10 @@ process.on("unhandledRejection", (ev) => {
 
 async function main() {
   const args = yargs(hideBin(process.argv))
+    .option("config", {
+      describe: "the docship.mjs file",
+      type: "string",
+    })
     .option("indir", {
       describe: "the docs directory",
       type: "string",
@@ -35,14 +39,16 @@ async function main() {
     })
     .parseSync();
 
+
+
   let mod: { default: Config } | undefined;
   try {
-    mod = await import(path.resolve(args.indir, "docship.mjs"));
+    mod = await import(args.config ?? path.resolve(args.indir, "docship.mjs"));
   } catch (e) {
     if ((e as any).code === "ERR_MODULE_NOT_FOUND") {
       console.error("Missing docship.mjs, using defaults...");
     } else {
-      throw Error(`failed to require docship.config.js: ${e}`);
+      throw Error(`failed to require docship.mjs: ${e}`);
     }
   }
 

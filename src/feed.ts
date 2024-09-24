@@ -27,7 +27,7 @@ export function generateFeed(
   const filterFeed = config?.callbacks?.filterFeed;
   if (!filterFeed) {
     throw new Error(
-      `Invalid docship.config.js: "callbacks.filterFeed" is required to generate feed`,
+      `Invalid docship.mjs: "callbacks.filterFeed" is required to generate feed`,
     );
   }
 
@@ -43,7 +43,7 @@ export function generateFeed(
 
   if (!config?.baseUrl) {
     throw new Error(
-      `Invalid docship.config.js: "baseUrl" is required to generate feed`,
+      `Invalid docship.mjs: "baseUrl" is required to generate feed`,
     );
   }
 
