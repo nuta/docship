@@ -10,7 +10,7 @@
   ],
   "type": "module",
   "scripts": {
-    "dev": "DEBUG=1 tsx watch --ignore /private src/index.ts --watch --indir example",
+    "dev": "DEBUG=1 tsx src/index.ts --watch --indir example --config example/docship.mjs",
     "build": "tsc",
     "format": "pnpm biome format --write src package.json",
     "lint": "pnpm biome lint --write src"

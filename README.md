@@ -62,7 +62,7 @@ docship --watch
 
 ```
 ├── favicon.ico    -- Static files are copied as-is
-├── index.md       -- /index.html
+├── index.md       -- /index.html (you may also use README.md for /index.html)
 ├── docship.mjs    -- Configuration file (optional)
 ├── _layouts/      -- Layouts directory
 │   ├── blog.jsx     -- Layout for "blog" pages

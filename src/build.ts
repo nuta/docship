@@ -78,7 +78,12 @@ export async function build(options: BuildOptions) {
     progress(`Rendering ${pagePath}`);
     const { html, frontMatter } = await markdown2html(pagePath);
     const destPath = path.relative(options.inDir, pagePath);
-    const href = `/${destPath.replace(/\.md$/, "")}`;
+
+    const href =
+      (path.basename(pagePath) === "README.md")
+        ? `${path.dirname(destPath)}/index`
+        : `/${destPath.replace(/\.md$/, "")}`
+
     pages.push({ sourcePath: pagePath, href, meta: frontMatter, html });
   }
 
