@@ -5,8 +5,11 @@ import os from "node:os";
 import fs from "node:fs/promises";
 import autoprefixer from "autoprefixer";
 import { srcDir } from "./utils.js";
+import { Config } from "./config.js";
 
-export async function generateCss(tailwindContentDir: string): Promise<string> {
+const DEFAULT_GLOBAL_CSS_PATH = path.join(srcDir(), "../defaults/default.css");
+
+export async function generateCss(config: Config | undefined, tailwindContentDir: string): Promise<string> {
   let globalCss = `
     @tailwind base;
     @tailwind components;
@@ -14,7 +17,7 @@ export async function generateCss(tailwindContentDir: string): Promise<string> {
   `;
 
   globalCss += await fs.readFile(
-    path.join(srcDir(), "../defaults/default.css"),
+    config?.globalCssPath ?? DEFAULT_GLOBAL_CSS_PATH,
     "utf-8",
   );
 

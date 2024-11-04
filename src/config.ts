@@ -1,8 +1,11 @@
 import type { FeedOptions } from "feed";
-import { Builder } from "./builders/builder.js";
 import type { Page } from "./layout.js";
 
 export interface Config {
+  website: {
+    title: string;
+  }
+  globalCssPath?: string;
   feedOptions?: FeedOptions;
   baseUrl?: string;
   callbacks?: {

@@ -37,7 +37,8 @@ export class VercelBuildOutputBuilder {
     await fs.writeFile(
       this.#vercelJsonPath,
       JSON.stringify({
-        cleanUrls: true,
+        "cleanUrls": true,
+        "trailingSlash": false,
       }),
     );
 

@@ -36,13 +36,14 @@ export async function build(options: BuildOptions) {
   }
 
   // Load layouts.
+  progress("Loading layouts");
   for (const basename of layoutFiles) {
     if (!basename.endsWith(".jsx")) {
       continue;
     }
 
     const layoutRelPath = path.join(layoutsDir, basename);
-    progress(`Loading ${layoutRelPath}`);
+    console.log(`${layoutRelPath}`);
     const layout = await loadLayoutFile(layoutRelPath);
 
     const lauoutName = path.basename(layoutRelPath, ".jsx");
@@ -53,8 +54,6 @@ export async function build(options: BuildOptions) {
   const defaultLayout = await loadLayoutFile(
     path.join(srcDir(), "../defaults/default.jsx"),
   );
-
-  await fs.rm(options.outDir, { recursive: true, force: true });
 
   let builder: Builder;
   switch (options.builderName) {
@@ -75,13 +74,13 @@ export async function build(options: BuildOptions) {
       continue;
     }
 
-    progress(`Rendering ${pagePath}`);
+    console.log(`${pagePath}`);
     const { html, frontMatter } = await markdown2html(pagePath);
     const destPath = path.relative(options.inDir, pagePath);
 
     const href =
       (path.basename(pagePath) === "README.md")
-        ? `${path.dirname(destPath)}/index`
+        ? `/${path.dirname(destPath)}/index`
         : `/${destPath.replace(/\.md$/, "")}`
 
     pages.push({ sourcePath: pagePath, href, meta: frontMatter, html });
@@ -119,7 +118,10 @@ export async function build(options: BuildOptions) {
       );
     }
 
-    let renderedHtml = await layout.render({ type: "html", html }, meta, pages);
+    const children = { type: "html", html };
+    let renderedHtml = await layout.render({
+      meta, pages, href, website: options.config?.website, children
+    });
 
     renderedHtml = renderedHtml.replace("</head>", `${headTagEpilogue}</head>`);
     await builder.writeStaticFile(`${href}.html`, renderedHtml);
@@ -135,12 +137,12 @@ export async function build(options: BuildOptions) {
     }
 
     const relPath = path.relative(options.inDir, assetPath);
-    progress(`Copying ${relPath}`);
+    console.log(`${relPath}`);
     await builder.copyStaticFile(relPath, assetPath);
   }
 
   progress("Generating CSS");
-  const css = await generateCss(builder.tailwindContentDir());
+  const css = await generateCss(options.config, builder.tailwindContentDir());
   await builder.writeStaticFile("styles.css", css);
 
   if (needsFeed) {

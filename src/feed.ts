@@ -50,7 +50,7 @@ export function generateFeed(
   for (const page of sortedPages) {
     const date = parseDate(page);
     const title = page.meta.title;
-    const link = `${config.baseUrl}${page.href}`;
+    const link = `${config.baseUrl.replace(/\/+$/, "")}/${page.href.replace(/^\/+/, "")}`;
 
     if (typeof title !== "string") {
       throw new Error(`${page.sourcePath}: Missing "title" field`);

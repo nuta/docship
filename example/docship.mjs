@@ -1,5 +1,8 @@
 export default {
   baseUrl: "https://github.com/nuta/docship",
+  website: {
+    title: "Docship Example",
+  },
   feedOptions: {
     title: "Docship Example",
     id: "https://github.com/nuta/docship",

@@ -4,7 +4,6 @@ date: 2024-09-14
 layout: blog
 ---
 
-# Heading 1
 ## Heading 2
 ### Heading 3
 

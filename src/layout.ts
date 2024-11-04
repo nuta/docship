@@ -1,16 +1,17 @@
 import * as swc from "@swc/core";
 import { prepareTempDir } from "./tmpdir.js";
 import type { FrontMatter } from "./markdown.js";
+import { BUILTINS } from "./builtins.js";
 
 export type Element =
   | string // "My Site" in "<title>My Site</title>"
   | { type: "html"; html: string }
   | {
-      type: "jsx";
-      tagName: string | LayoutFn;
-      props: Record<string, unknown> | null;
-      children: (Element | Element[])[];
-    };
+    type: "jsx";
+    tagName: string | LayoutFn;
+    props: Record<string, unknown> | null;
+    children: (Element | Element[])[];
+  };
 
 (globalThis as any).MyJSXElement = function MyJSXElement(
   tagName: string,
@@ -59,6 +60,10 @@ function elem2html(elem: Element | undefined): string {
   let html = `<${elem.tagName}`;
   if (elem.props) {
     for (let [key, value] of Object.entries(elem.props)) {
+      if (value === null || value === undefined) {
+        throw new Error(`got ${value} for "${key}" attribute in <${elem.tagName}>`);
+      }
+
       const valueStr = (value as any).toString();
       if (valueStr.includes('"')) {
         throw new Error(`invalid value in HTML prop: ${valueStr}`);
@@ -100,12 +105,12 @@ export class Layout {
     this.#layoutFn = layoutFn;
   }
 
-  async render(
-    children: Element,
-    meta: FrontMatter,
-    pages: Page[],
-  ): Promise<string> {
-    const rootElem = await this.#layoutFn({ children, meta, pages });
+  async render(props: Record<string, unknown>): Promise<string> {
+    if (!(globalThis as any).docship) {
+      (globalThis as any).docship = BUILTINS;
+    }
+
+    const rootElem = await this.#layoutFn(props);
     if (typeof rootElem !== "object" || rootElem === null) {
       throw new Error(
         `${this.#name} returned invalid JSX element: ${rootElem}`,

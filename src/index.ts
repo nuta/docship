@@ -6,6 +6,7 @@ import { hideBin } from "yargs/helpers";
 import type { Config } from "./config.js";
 import { watch } from "./watch.js";
 import { progress } from "./utils.js";
+import fs from "fs/promises";
 
 process.on("unhandledRejection", (ev) => {
   console.warn("unhandled rejection:", ev);
@@ -64,6 +65,7 @@ async function main() {
   if (args.watch) {
     await watch(buildOptions);
   } else {
+    await fs.rm(args.outdir, { recursive: true, force: true });
     await build({
       ...buildOptions,
     });
